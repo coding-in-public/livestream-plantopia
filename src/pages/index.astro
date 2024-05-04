@@ -1,0 +1,44 @@
+---
+import Card from "@/components/Card.astro";
+import Link from "@/components/Link";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Plant } from "astro:db";
+import { db } from "astro:db";
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const action = data.get("action");
+    if (action === "add-plant") {
+      const res = await fetch(`${Astro.url.origin}/api/addPlant.json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(res);
+    }
+    if (action === "mark-watered") {
+      // water it
+    }
+    if (action === "move-to-today") {
+      // move it to today
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+
+const plants = await db.select().from(Plant);
+---
+
+<BaseLayout>
+  <div
+    class="grid gap-8 jsutify-center items-start sm:gap-12 grid-cols-autofill"
+  >
+    {plants.map((p) => <Card item={p} />)}
+  </div>
+</BaseLayout>

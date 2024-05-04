@@ -1,0 +1,48 @@
+---
+import type { Plant } from "@/types/Plant";
+import { Image } from "astro:assets";
+import IconText from "./IconText.astro";
+import Link from "./Link";
+
+type Props = {
+  item: Plant;
+};
+
+const { item } = Astro.props;
+
+const { image_src, location, name, next_watering, water_freq } = item;
+
+const isToday = true;
+---
+
+<article class="grid gap-2">
+  <Image
+    src={image_src}
+    alt={name}
+    inferSize
+    width={400}
+    height={192}
+    class="w-80 h-48 object-cover"
+  />
+  <div class="grid gap-2 px-2">
+    <h2 class="font-bold tracking-wide text-3xl">{name}</h2>
+    <IconText icon="water" label="Next watering" text="8 days" />
+    <IconText icon="stopwatch" label="Water Frequency" text="2/week" />
+    <IconText icon="history" label="Last Watered" text="4 days ago" />
+    <IconText icon="house" label="Location" text={location} />
+    <form method="POST">
+      <input
+        type="text"
+        name="action"
+        value={isToday ? "mark-watered" : "move-to-today"}
+        readonly
+        hidden
+      />
+      <button
+        class="px-6 py-2 max-w-fit bg-slate-950 text-slate-50 flex items-center gap-1.5 hover:bg-slate-800 transition-all focus:outline-none focus-visible:ring-4 ring-offset-2 ring-slate-950 ring-offset-slate-50 font-bold uppercase tracking-widest text-lg"
+      >
+        {isToday ? "Mark Watered" : "Move to Today"}
+      </button>
+    </form>
+  </div>
+</article>

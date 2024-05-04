@@ -1,0 +1,54 @@
+---
+import Button from "@/components/Button";
+import PlantModal from "@/components/PlantModal";
+import { Icon } from "astro-icon/components";
+
+const siteData = {
+  title: "Plantopia",
+  description: "A app for tracking watering your plants.",
+};
+
+const { title = siteData.title, description = siteData.description } =
+  Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body
+    class="font-serif max-w-[2000px] mx-auto text-slate-950 bg-slate-50 grid gap-8 min-h-screen grid-rows-[auto_1fr_auto]"
+  >
+    <nav class="border-b-2 border-slate-950">
+      <div class="container py-3 flex items-center justify-between">
+        <a
+          href="/"
+          aria-label="Go Home"
+          class="flex items-center gap-1.5 hover:text-slate-800 transition-all focus:outline-none focus-visible:ring-4 ring-offset-2 ring-slate-950 ring-offset-slate-50"
+        >
+          <Icon name="plant" size={36} />
+          <span class="font-bold text-2xl mt-1">Plantopia</span>
+        </a>
+        <PlantModal client:load />
+      </div>
+    </nav>
+    <main class="container">
+      <slot />
+    </main>
+    <footer class="grid place-items-center p-2 border-t-2 border-slate-950">
+      <span class="font-bold text-2xl mt-1">Plantopia</span>
+    </footer>
+  </body>
+</html>

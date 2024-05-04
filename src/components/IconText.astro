@@ -1,0 +1,21 @@
+---
+import { Icon } from "astro-icon/components";
+
+type Props = {
+  icon: string;
+  label: string;
+  text: string;
+};
+
+const { icon, label, text } = Astro.props;
+---
+
+<div class="flex gap-2 items-center">
+  <Icon name={icon} size={24} />
+  <div class="grid">
+    <p class="uppercase text-xs font-sans">{label}</p>
+    <p class="leading-none text-2xl uppercase tracking-wide">
+      {text}
+    </p>
+  </div>
+</div>
